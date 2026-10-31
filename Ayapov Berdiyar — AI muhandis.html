@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ayapov Berdiyar — AI muhandis</title>
+<meta name="description" content="Ayapov Berdiyar, AI muhandis. Telegram, Instagram va pochta orqali bogʻlaning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F1FF;--ink:#1B1A3A;--muted:#575680;--card:rgba(255,255,255,.62);
+  --accent:#5B3DF5;--accent2:#D6247F;--line:rgba(27,26,58,.14);--chip:rgba(91,61,245,.09);
+  --display:"Unbounded","Trebuchet MS",system-ui,sans-serif;--body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0F1030;--ink:#ECEBFF;--muted:#A9A8D2;--card:rgba(28,29,74,.55);
+  --accent:#8F7CFF;--accent2:#FF6BAE;--line:rgba(236,235,255,.16);--chip:rgba(143,124,255,.16);color-scheme:dark}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100svh;background:var(--bg);color:var(--ink);font-family:var(--body);
+  display:grid;place-items:center;padding:24px 16px;overflow-x:hidden}
+#net{position:fixed;inset:0;width:100%;height:100%;z-index:0}
+.card{position:relative;z-index:1;width:100%;max-width:540px;padding:clamp(24px,5vw,40px);
+  background:var(--card);border:1px solid var(--line);border-radius:28px;
+  -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+  box-shadow:0 30px 80px -30px rgba(40,20,140,.45);transition:transform .25s ease-out;will-change:transform}
+.mono{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;
+  font:700 20px var(--display);color:#fff;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+h1{margin:22px 0 6px;font:700 clamp(30px,8vw,44px)/1.08 var(--display);letter-spacing:-.02em}
+.w{display:inline-block;white-space:nowrap;overflow:hidden;padding-bottom:.12em;margin-right:.28em}
+.l{display:inline-block;transform:translateY(110%);animation:up .75s cubic-bezier(.2,.85,.25,1) forwards;
+  animation-delay:calc(var(--i)*45ms + .2s)}
+.role{margin:0;font:600 18px var(--body);color:var(--accent)}
+.bio{margin:16px 0 0;max-width:44ch;line-height:1.65;color:var(--muted)}
+h2{margin:30px 0 12px;font:600 15px var(--body);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{padding:7px 13px;border-radius:999px;background:var(--chip);border:1px solid var(--line);
+  font-size:14px;font-weight:500;transition:background .2s,color .2s,border-color .2s}
+.chips li:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+.links{display:flex;flex-direction:column;gap:10px}
+.link{display:flex;align-items:center;gap:14px;padding:12px 14px;border-radius:18px;text-decoration:none;color:inherit;
+  border:1px solid var(--line);background:transparent;transition:background .2s,border-color .2s,transform .2s}
+.link:hover{border-color:var(--accent);background:var(--chip);transform:translateX(4px)}
+.link:focus-visible,.chips li:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex:none;
+  background:var(--chip);color:var(--accent);transition:background .2s,color .2s}
+.link:hover .ic{background:var(--accent);color:#fff}
+.ic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.txt{display:flex;flex-direction:column;min-width:0}
+.txt b{font-weight:600;font-size:15px}
+.txt span{font-size:14px;color:var(--muted);overflow-wrap:anywhere}
+.in{opacity:0;animation:fade .8s ease forwards;animation-delay:calc(var(--d)*1ms)}
+@keyframes up{to{transform:none}}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .l{transform:none;animation:none}.in{opacity:1;animation:none}.card,.link,.chips li{transition:none}
+}
+</style>
+</head>
+<body>
+<canvas id="net" aria-hidden="true"></canvas>
+
+<main class="card" id="card">
+  <div class="mono in" style="--d:50" aria-hidden="true">AB</div>
+  <h1 id="name" aria-label="Ayapov Berdiyar">Ayapov Berdiyar</h1>
+  <p class="role in" style="--d:750">AI muhandis</p>
+  <p class="bio in" style="--d:850">Sun’iy intellekt modellarini yarataman va ularni haqiqiy mahsulotlarga ulayman: ma’lumotdan tortib ishlaydigan xizmatgacha.</p>
+
+  <h2 class="in" style="--d:950">Koʻnikmalar</h2>
+  <ul class="chips in" style="--d:1000">
+    <li>Python</li><li>PyTorch</li><li>TensorFlow</li><li>Machine Learning</li>
+    <li>Deep Learning</li><li>NLP</li><li>LLM va RAG</li><li>Computer Vision</li>
+    <li>Prompt engineering</li><li>FastAPI</li><li>Docker</li><li>Git</li>
+  </ul>
+
+  <h2 class="in" style="--d:1100">Bogʻlanish</h2>
+  <nav class="links in" style="--d:1150" aria-label="Aloqa">
+    <a class="link" href="https://t.me/Tqtqatt" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg></span>
+      <span class="txt"><b>Telegram</b><span>@Tqtqatt</span></span>
+    </a>
+    <a class="link" href="https://instagram.com/1zron2._ae" target="_blank" rel="noopener">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><path d="M17.6 6.4h.01"/></svg></span>
+      <span class="txt"><b>Instagram</b><span>1zron2._ae</span></span>
+    </a>
+    <a class="link" href="mailto:berdiyarayapov@gmail.com">
+      <span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="m3 7 9 6 9-6"/></svg></span>
+      <span class="txt"><b>Pochta</b><span>berdiyarayapov@gmail.com</span></span>
+    </a>
+  </nav>
+</main>
+
+<script>
+(function(){
+  var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Ism harflari birma-bir chiqadi
+  var h=document.getElementById("name"),t=h.getAttribute("aria-label"),i=0;
+  h.textContent="";
+  t.split(" ").forEach(function(word){
+    var w=document.createElement("span");w.className="w";w.setAttribute("aria-hidden","true");
+    word.split("").forEach(function(c){var s=document.createElement("span");s.className="l";s.style.setProperty("--i",i++);s.textContent=c;w.appendChild(s)});
+    h.appendChild(w);
+  });
+
+  // Neyron tarmoq foni
+  var cv=document.getElementById("net"),cx=cv.getContext("2d"),W,H,pts=[],m={x:-999,y:-999},ca,cb;
+  function col(){var s=getComputedStyle(document.documentElement);ca=s.getPropertyValue("--accent").trim();cb=s.getPropertyValue("--accent2").trim()}
+  function size(){
+    var d=window.devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0);
+    var n=Math.round(Math.min(90,W*H/14000));
+    pts=[];for(var k=0;k<n;k++)pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35});
+    if(reduce)draw(false);
+  }
+  function draw(step){
+    cx.clearRect(0,0,W,H);
+    for(var a=0;a<pts.length;a++){
+      var p=pts[a];
+      if(step){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1}
+      cx.globalAlpha=.8;cx.fillStyle=ca;cx.beginPath();cx.arc(p.x,p.y,1.8,0,6.283);cx.fill();
+      for(var b=a+1;b<pts.length;b++){
+        var q=pts[b],dx=p.x-q.x,dy=p.y-q.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<130){cx.globalAlpha=(1-d/130)*.35;cx.strokeStyle=ca;cx.lineWidth=1;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.stroke()}
+      }
+      var mx=p.x-m.x,my=p.y-m.y,md=Math.sqrt(mx*mx+my*my);
+      if(md<170){cx.globalAlpha=(1-md/170)*.7;cx.strokeStyle=cb;cx.lineWidth=1.2;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(m.x,m.y);cx.stroke()}
+    }
+    cx.globalAlpha=1;
+  }
+  function loop(){draw(true);requestAnimationFrame(loop)}
+  col();size();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change",function(){col();if(reduce)draw(false)});
+  addEventListener("resize",size);
+  if(!reduce){
+    addEventListener("pointermove",function(e){m.x=e.clientX;m.y=e.clientY});
+    document.addEventListener("pointerleave",function(){m.x=m.y=-999});
+    loop();
+  }
+
+  // Kartaning yengil qiyshayishi (faqat sichqoncha bilan)
+  var card=document.getElementById("card");
+  if(!reduce&&matchMedia("(hover:hover)").matches){
+    document.addEventListener("pointermove",function(e){
+      var x=(e.clientX/innerWidth-.5)*2,y=(e.clientY/innerHeight-.5)*2;
+      card.style.transform="perspective(900px) rotateY("+(x*4)+"deg) rotateX("+(-y*4)+"deg)";
+    });
+  }
+})();
+</script>
+</body>
+</html>
